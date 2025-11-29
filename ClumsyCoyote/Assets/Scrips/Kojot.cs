@@ -1,28 +1,39 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 
 
 public class Kojot : MonoBehaviour
 {
     public float v;
-    public InputAction PlayerInput;
+    public PlayerInput input;
+    private InputAction TouchPress;//klikanie dzia³a jak dotaykanie (przez input debugger)
+    private InputAction TouchPosicon;
     [SerializeField] Rigidbody2D rig;
-    [SerializeField] Vector2 MovmentInput;
+    Vector2 pos;
+    void Awake()
+    {
+        input = GetComponent<PlayerInput>();
+        TouchPress = input.actions["Press"];
+        TouchPosicon = input.actions["Walk"];
+    }
 
-    void OnEnable()
-    {
-        PlayerInput.Enable();//wymagana rzecz by input dzia³a³
+    void FixedUpdate()
+    {      
+        pos = TouchPosicon.ReadValue<Vector2>();
+        if (TouchPress.IsPressed())
+        {
+            if (Screen.width / 2 < pos.x)
+            {
+                rig.linearVelocity += new Vector2(v * Time.deltaTime, 0f);
+            }
+            else
+            {
+                rig.linearVelocity += new Vector2(-v * Time.deltaTime, 0f);
+            }
+        }
     }
-    void OnDisable()
-    {
-        PlayerInput.Disable();//wymagana rzecz by input dzia³a³
-    }
-    void Update()
-    {
-        MovmentInput = PlayerInput.ReadValue<Vector2>();
-    }
-    private void FixedUpdate()
-    {
-        rig.linearVelocity = new Vector2(MovmentInput.x * v,rig.linearVelocityY);
-    }
+
+
 }
