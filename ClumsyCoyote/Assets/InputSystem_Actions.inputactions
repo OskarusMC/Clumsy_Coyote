@@ -16,6 +16,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "JumpBoost",
+                    "type": "Button",
+                    "id": "07461282-384a-4136-b925-eae789e2bbb7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Walk",
                     "type": "Value",
                     "id": "06e625d4-4f1d-4c97-b8b8-823081efa6b4",
@@ -34,6 +43,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Touch",
                     "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "56f4fa48-2af6-461a-81a9-1e3786be5409",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Touch",
+                    "action": "JumpBoost",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
