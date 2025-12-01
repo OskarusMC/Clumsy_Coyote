@@ -30,11 +30,13 @@ public class Kojot : MonoBehaviour
     void OnEnable()
     {
         TouchBoost.started += Boost;
+        TouchBoost.canceled += Jump;
         TouchBoost.Disable();
         TouchWalk.started += Walk;
     }
     void OnDisable()
     {
+        TouchBoost.canceled -= Jump;
         TouchBoost.started -= Boost;
         TouchWalk.started -= Walk;
     }
@@ -58,6 +60,7 @@ public class Kojot : MonoBehaviour
                 material.friction = 0f;
                 TouchBoost.Enable();
                 TouchWalk.Disable();
+                Speed();
         }
         }
         if (math.abs(rig.linearVelocityX) < 10)
@@ -75,15 +78,30 @@ public class Kojot : MonoBehaviour
         rig.linearVelocityX = 0f;
         v = 50f;
     }
+    async void Speed()
+    {
+        while (Ball && rig.linearVelocityX <= 50)
+        {
+            rig.linearVelocityX += 0.02f;
+            Debug.Log(rig.linearVelocityX);
+            await Awaitable.FixedUpdateAsync();
+        }
+    }
     async void Boost(InputAction.CallbackContext context)
     {
         while (TouchBoost.IsPressed())
         {
-            Debug.Log(rig.linearVelocityX);
-            rig.linearVelocityX *= 1.02f;
-            await Awaitable.WaitForSecondsAsync(0.1f);
+            if (rig.linearVelocityX <= 50)
+            {
+                 rig.linearVelocityX *= 1.001f;
+                 
+            }
+            await Awaitable.WaitForSecondsAsync(0.01f);
         }
-
+    }
+    void Jump(InputAction.CallbackContext context)
+    {
+        rig.linearVelocityY = math.pow(math.abs(rig.linearVelocityX),1/3f) * 10;
     }
     async void Walk(InputAction.CallbackContext context)
     {
