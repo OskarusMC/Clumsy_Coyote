@@ -13,6 +13,10 @@ public class Kojot : MonoBehaviour
     private InputAction TouchBoost;//klikanie dzia³a jak dotaykanie (przez input debugger)
     [SerializeField] Rigidbody2D rig;
 
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, transform.position - new Vector3(0f, 3f, 0f));
+    }
     void Awake()
     {
         TouchBoost = input.actions["JumpBoost"];
@@ -26,6 +30,14 @@ public class Kojot : MonoBehaviour
     {
         TouchBoost.canceled -= Jump;
         TouchBoost.started -= Boost;
+    }
+
+    void Update()
+    {
+        if (Physics2D.Linecast(transform.position,transform.position - new Vector3(0f,3f,0f)))
+        {
+            Debug.Log("A");
+        }
     }
 
     void FixedUpdate()
