@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class Kojot : MonoBehaviour
 {
+    public ContactFilter2D filter;
+    RaycastHit2D[] results = new RaycastHit2D[1];
 
     [SerializeField] PhysicsMaterial2D material;
     [SerializeField] PlayerInput input;
@@ -28,25 +30,39 @@ public class Kojot : MonoBehaviour
     }
     void OnDisable()
     {
-        TouchBoost.canceled -= Jump;
         TouchBoost.started -= Boost;
+        TouchBoost.canceled -= Jump;
+
     }
 
     void Update()
     {
-        if (Physics2D.Linecast(transform.position,transform.position - new Vector3(0f,3f,0f)))
+        int hit = Physics2D.Linecast(transform.position, transform.position - new Vector3(0f, 3f, 0f), filter, results);
+        if (hit > 0)
         {
-            Debug.Log("A");
+            TouchBoost.Enable();
         }
+        else
+        {
+            TouchBoost.Disable();
+        }
+        Debug.Log(results[0].collider.gameObject.name);
     }
 
     void FixedUpdate()
     {
         if (rig.linearVelocityX <= 50)
         {
-            rig.linearVelocityX += 0.02f;
+            if (rig.linearVelocityX >= 0)
+            {
+                rig.linearVelocityX += 0.02f;
+            }
+            else {
+                rig.linearVelocityX -= 0.02f;
+            }
+
             transform.eulerAngles -= new Vector3(0f,0f, 18/25f * rig.linearVelocityX);
-            Debug.Log(rig.linearVelocityX);
+
         }
     }
 
@@ -57,14 +73,14 @@ public class Kojot : MonoBehaviour
             if (rig.linearVelocityX <= 50)
             {
                  rig.linearVelocityX *= 1.001f;
-                 
+                Debug.Log(rig.linearVelocityX);                 
             }
-            await Awaitable.WaitForSecondsAsync(0.01f);
+            await Awaitable.FixedUpdateAsync();
         }
     }
     void Jump(InputAction.CallbackContext context)
     {
-        rig.linearVelocityY = 2/5f * rig.linearVelocityX + 20;
+        rig.linearVelocityY = 2/5f * math.abs(rig.linearVelocityX) + 20;
     }
     
 
