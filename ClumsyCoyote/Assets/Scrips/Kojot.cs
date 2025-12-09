@@ -1,5 +1,6 @@
 
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,17 +8,18 @@ using UnityEngine.InputSystem;
 
 public class Kojot : MonoBehaviour
 {
-    public ContactFilter2D filter;
-    RaycastHit2D[] results = new RaycastHit2D[1];
+    public LayerMask maska;
 
+    [SerializeField] Rigidbody2D rig;
     [SerializeField] PhysicsMaterial2D material;
     [SerializeField] PlayerInput input;
     private InputAction TouchBoost;//klikanie dzia³a jak dotaykanie (przez input debugger)
-    [SerializeField] Rigidbody2D rig;
+ 
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, transform.position - new Vector3(0f, 3f, 0f));
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, -transform.up*3);
     }
     void Awake()
     {
@@ -37,8 +39,7 @@ public class Kojot : MonoBehaviour
 
     void Update()
     {
-        int hit = Physics2D.Linecast(transform.position, transform.position - new Vector3(0f, 3f, 0f), filter, results);
-        if (hit > 0)
+        if (Physics2D.Raycast(transform.position, -transform.up, 3f, maska))
         {
             TouchBoost.Enable();
         }
@@ -46,23 +47,21 @@ public class Kojot : MonoBehaviour
         {
             TouchBoost.Disable();
         }
-        Debug.Log(results[0].collider.gameObject.name);
     }
 
     void FixedUpdate()
     {
-        if (rig.linearVelocityX <= 50)
+        if (rig.linearVelocityX <= 50 || rig.linearVelocityX <= 50)
         {
             if (rig.linearVelocityX >= 0)
             {
-                rig.linearVelocityX += 0.02f;
-            }
-            else {
-                rig.linearVelocityX -= 0.02f;
-            }
 
-            transform.eulerAngles -= new Vector3(0f,0f, 18/25f * rig.linearVelocityX);
-
+                rig.AddRelativeForce(Vector3.right * 30f);
+            }
+            else
+            {
+                rig.AddRelativeForce(Vector3.left * 30f);
+            }
         }
     }
 
@@ -70,19 +69,19 @@ public class Kojot : MonoBehaviour
     {
         while (TouchBoost.IsPressed())
         {
-            if (rig.linearVelocityX <= 50)
+            if (rig.linearVelocityX <= 50 || rig.linearVelocityX <= 50)
             {
-                 rig.linearVelocityX *= 1.001f;
-                Debug.Log(rig.linearVelocityX);                 
+                rig.linearVelocity *= 1.001f;
             }
             await Awaitable.FixedUpdateAsync();
         }
     }
     void Jump(InputAction.CallbackContext context)
     {
-        rig.linearVelocityY = 2/5f * math.abs(rig.linearVelocityX) + 20;
+        rig.AddRelativeForce(Vector3.up * 20000f);
+
     }
-    
+
 
 }        
 
