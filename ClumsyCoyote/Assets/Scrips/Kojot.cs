@@ -9,13 +9,15 @@ using UnityEngine.InputSystem;
 public class Kojot : MonoBehaviour
 {
     public LayerMask maska;
+    bool InAir;
+    Vector3 oldPos;
 
     [SerializeField] Rigidbody2D rig;
     [SerializeField] PhysicsMaterial2D material;
     [SerializeField] PlayerInput input;
     private InputAction TouchBoost;//klikanie dzia³a jak dotaykanie (przez input debugger)
  
-
+    
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -36,30 +38,35 @@ public class Kojot : MonoBehaviour
         TouchBoost.canceled -= Jump;
 
     }
-
+    void Start()
+    {
+        rig.linearVelocity += 0.05f * new Vector2(transform.right.x, transform.right.y);
+    }
     void Update()
     {
         if (Physics2D.Raycast(transform.position, -transform.up, 3f, maska))
         {
             TouchBoost.Enable();
+            InAir = false;
         }
         else
         {
             TouchBoost.Disable();
+            InAir = true;
         }
     }
 
     void FixedUpdate()
     {
-        if (rig.linearVelocityX <= 50 || rig.linearVelocityY <= 50)
+        if (rig.linearVelocityX <= 50 && rig.linearVelocityY <= 50 && InAir == false)
         {
-            if (rig.linearVelocityX >= 0)
+            if (InAir == false)//<- Problem! musi byæ je¿eli porusza siê w prawo to (wzglêdniaj¹c rotacje) (narazie da³em placeholder)
             {
-                rig.linearVelocity += 0.02f * new Vector2(transform.right.x, transform.right.y);
+                rig.linearVelocity += 0.05f * new Vector2(transform.right.x, transform.right.y);
             }
             else
             {
-                rig.linearVelocity -= 0.02f * new Vector2(transform.right.x, transform.right.y);
+                rig.linearVelocity -= 0.05f * new Vector2(transform.right.x, transform.right.y);
             }
         }
     }
@@ -68,9 +75,10 @@ public class Kojot : MonoBehaviour
     {
         while (TouchBoost.IsPressed())
         {
-            if (rig.linearVelocityX <= 50 || rig.linearVelocityY <= 50)
+            if (rig.linearVelocityX <= 50 && rig.linearVelocityY <= 50)
             {
-                rig.linearVelocity *= 1.001f;
+                Debug.Log("'how'");
+                rig.linearVelocity *= 1.003f;
             }
             await Awaitable.FixedUpdateAsync();
         }
@@ -80,11 +88,11 @@ public class Kojot : MonoBehaviour
         switch (transform.eulerAngles.z)
         {
             case 0:
-                rig.linearVelocityY = -2 / 5f * math.abs(rig.linearVelocityX)  + 20;
+                rig.linearVelocityY = 2 / 5f * math.abs(rig.linearVelocityX)  + 20;
                 Debug.Log('U');
                 break;  
             case 90:
-                rig.linearVelocityX = 2 / 5f * math.abs(rig.linearVelocityY) - 20;
+                rig.linearVelocityX = -2 / 5f * math.abs(rig.linearVelocityY) - 20;
                 Debug.Log('L');
                 break;            
             case 180:
