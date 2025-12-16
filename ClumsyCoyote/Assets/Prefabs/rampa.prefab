@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6590998171547439985
 Transform:
   m_ObjectHideFlags: 0
@@ -92,8 +92,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GravityFlip
   RampOfset: -90
-  gracz: {fileID: 0}
-  camera: {fileID: 0}
   OpositRampa: {fileID: 8706409865911290058}
 --- !u!1 &2566051404089287322
 GameObject:
@@ -106,6 +104,7 @@ GameObject:
   - component: {fileID: 5479589696610806181}
   - component: {fileID: 4984805372093536926}
   - component: {fileID: 5857598273642559637}
+  - component: {fileID: 6712016680458827212}
   m_Layer: 0
   m_Name: rampa
   m_TagString: Untagged
@@ -257,6 +256,21 @@ PolygonCollider2D:
       - {x: 5.925, y: -6.15}
       - {x: 5.925, y: 6.15}
   m_UseDelaunayMesh: 0
+--- !u!114 &6712016680458827212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2566051404089287322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a36b898383bea54bb7d231eaddfb2cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RampaChek
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &8706409865911290058
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9017463331411827582
 Transform:
   m_ObjectHideFlags: 0
@@ -349,6 +363,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GravityFlip
   RampOfset: 90
-  gracz: {fileID: 0}
-  camera: {fileID: 0}
   OpositRampa: {fileID: 1523275577558022196}

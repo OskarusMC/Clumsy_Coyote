@@ -9,6 +9,5 @@ public class CameraS : MonoBehaviour
     void LateUpdate()
     {
         transform.position = gracz.position + new Vector3(0f,0.5f,-10f);
-        // transform.rotation = gracz.rotation;
     }
 }
