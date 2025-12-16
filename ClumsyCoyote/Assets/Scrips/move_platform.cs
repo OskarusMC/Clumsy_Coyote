@@ -4,7 +4,7 @@ public class move_object: MonoBehaviour
 {
     public Transform PointA;
     public Transform PointB;
-    public float moveSpeed = 20f;
+    public float moveSpeed = 2f;
     private Vector3 nextPosition;
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,7 @@ public class move_object: MonoBehaviour
         if (transform.position == nextPosition)
         { 
             nextPosition = (nextPosition == PointA.position)? PointB.position : PointA.position;
+            
     }
 }
 }
