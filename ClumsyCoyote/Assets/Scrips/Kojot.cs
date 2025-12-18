@@ -60,7 +60,8 @@ public class Kojot : MonoBehaviour
     {
         if (rig.linearVelocityX <= 50 && rig.linearVelocityY <= 50 && rig.linearVelocityX != 0 && rig.linearVelocityY != 0)
         {
-             rig.linearVelocity += 0.05f * new Vector2(transform.right.x, transform.right.y) * (new Vector2(rig.linearVelocityX,rig.linearVelocityY) /  new Vector2(math.abs(rig.linearVelocityX), math.abs(rig.linearVelocityY)));
+            Debug.Log(new Vector2(rig.linearVelocityX, rig.linearVelocityY) / new Vector2(math.abs(rig.linearVelocityX), math.abs(rig.linearVelocityY)));
+             rig.linearVelocity += 0.05f * new Vector2(math.abs(transform.right.x), math.abs(transform.right.y)) * (new Vector2(rig.linearVelocityX,rig.linearVelocityY) /  new Vector2(math.abs(rig.linearVelocityX), math.abs(rig.linearVelocityY)));
         }
     }
 
