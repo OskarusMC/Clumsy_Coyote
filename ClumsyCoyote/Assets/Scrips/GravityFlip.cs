@@ -5,16 +5,19 @@ public class GravityFlip : MonoBehaviour
 {
     
     [SerializeField] int RampOfset;
-    public bool ignore = false;
+
 
     [SerializeField] GameObject OpositRampa;
     void OnTriggerEnter2D(Collider2D collision)
     {
 
 
-        if (collision.gameObject.layer == 3 && ignore == false)
+        if (collision.gameObject.layer == 3)
         {
-            StartCoroutine(DisableRampa());
+            if (OpositRampa != null)
+            {
+                DisableRampa();
+            }
             Transform gracz = collision.transform;
             float GravityDarection = transform.eulerAngles.z + RampOfset;
             switch (GravityDarection % 360)
@@ -35,21 +38,12 @@ public class GravityFlip : MonoBehaviour
             }
             gracz.eulerAngles = new Vector3(0,0,GravityDarection);
             }
-        else if(ignore){
-            StartCoroutine(NextRampa());
-        }
     }
-    IEnumerator NextRampa()// CORUTINA SIÊ ZATRZYMUJE GDY OBIEKT NIE ISTNIEJE :( :( :( :( :(
-    { 
-        GravityFlip dalej = OpositRampa.GetComponent<GravityFlip>();
-        dalej.ignore = false;
-        yield return new WaitForSeconds(1);
-        dalej.ignore = true;
-    }
-        IEnumerator DisableRampa()
+
+    async void DisableRampa()
     {
         OpositRampa.SetActive(false);
-        yield return new WaitForSeconds(1);
+        await Awaitable.WaitForSecondsAsync(2);
         OpositRampa.SetActive(true);
     }
 }
