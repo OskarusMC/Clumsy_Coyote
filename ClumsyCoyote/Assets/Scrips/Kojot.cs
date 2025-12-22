@@ -1,4 +1,6 @@
 
+using NUnit.Framework;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -9,31 +11,37 @@ using UnityEngine.InputSystem;
 public class Kojot : MonoBehaviour
 {
     public LayerMask maska;
-    bool InAir;
+    bool InAir = true;
     Vector3 oldPos;
 
     [SerializeField] Rigidbody2D rig;
-    [SerializeField] PhysicsMaterial2D material;
+    [SerializeField] List<PhysicsMaterial2D> material;
     [SerializeField] PlayerInput input;
-    private InputAction TouchBoost;//klikanie dzia³a jak dotaykanie (przez input debugger)
- 
-    
+    private InputAction TouchBoost;//klikanie dzia³a jak dotaykanie
+    private InputAction TouchBounce;
+
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, -transform.up*3);
+        Gizmos.DrawRay(transform.position, transform.right * 10);
+        Gizmos.DrawRay(transform.position, -transform.right * 10);
     }
     void Awake()
     {
         TouchBoost = input.actions["JumpBoost"];
+        TouchBounce = input.actions["TouchBounce"];
     }
     void OnEnable()
     {
+        TouchBounce.performed += Bounce;
         TouchBoost.started += Boost;
         TouchBoost.canceled += Jump;
     }
     void OnDisable()
     {
+        TouchBounce.performed -= Bounce;
         TouchBoost.started -= Boost;
         TouchBoost.canceled -= Jump;
 
@@ -47,6 +55,10 @@ public class Kojot : MonoBehaviour
         if (Physics2D.Raycast(transform.position, -transform.up, 3f, maska))
         {
             TouchBoost.Enable();
+            if (InAir)
+            {
+                rig.sharedMaterial = material[0];
+            }
             InAir = false;
         }
         else
@@ -54,13 +66,18 @@ public class Kojot : MonoBehaviour
             TouchBoost.Disable();
             InAir = true;
         }
+
+
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        rig.sharedMaterial = material[1];
+    }
     void FixedUpdate()
     {
         if (rig.linearVelocityX <= 50 && rig.linearVelocityY <= 50 && rig.linearVelocityX != 0 && rig.linearVelocityY != 0)
         {
-            Debug.Log(new Vector2(rig.linearVelocityX, rig.linearVelocityY) / new Vector2(math.abs(rig.linearVelocityX), math.abs(rig.linearVelocityY)));
              rig.linearVelocity += 0.05f * new Vector2(math.abs(transform.right.x), math.abs(transform.right.y)) * (new Vector2(rig.linearVelocityX,rig.linearVelocityY) /  new Vector2(math.abs(rig.linearVelocityX), math.abs(rig.linearVelocityY)));
         }
     }
@@ -71,7 +88,6 @@ public class Kojot : MonoBehaviour
         {
             if (rig.linearVelocityX <= 50 && rig.linearVelocityY <= 50)
             {
-                Debug.Log("'how'");
                 rig.linearVelocity *= 1.003f;
             }
             await Awaitable.FixedUpdateAsync();
@@ -83,26 +99,30 @@ public class Kojot : MonoBehaviour
         {
             case 0:
                 rig.linearVelocityY = 2 / 5f * math.abs(rig.linearVelocityX)  + 20;
-                Debug.Log('U');
                 break;  
             case 90:
                 rig.linearVelocityX = -2 / 5f * math.abs(rig.linearVelocityY) - 20;
-                Debug.Log('L');
                 break;            
             case 180:
                 rig.linearVelocityY = -2 / 5f * math.abs(rig.linearVelocityX) - 20;
-                Debug.Log('D');
                 break;                
             case 270:
                 rig.linearVelocityX = 2 / 5f * math.abs(rig.linearVelocityY) + 20;
-                Debug.Log('R');
                 break;
         }
 
 
     }
 
-
+    void Bounce(InputAction.CallbackContext context)
+    {
+        if (Physics2D.Raycast(transform.position, transform.right, 10f, maska) || Physics2D.Raycast(transform.position, -transform.right, 10f, maska))
+        {
+            Debug.Log(rig.sharedMaterial);
+            rig.sharedMaterial = material[2];
+            Debug.Log(rig.sharedMaterial);
+        }
+    }
 }
 
 //if (Ball == false)
