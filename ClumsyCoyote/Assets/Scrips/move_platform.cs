@@ -19,6 +19,6 @@ public class move_object: MonoBehaviour
         { 
             nextPosition = (nextPosition == PointA.position)? PointB.position : PointA.position;
             
+        }
     }
-}
 }
