@@ -17,7 +17,7 @@ public class Kojot : MonoBehaviour
     [SerializeField] Rigidbody2D rig;
     [SerializeField] List<PhysicsMaterial2D> material;
     [SerializeField] PlayerInput input;
-    private InputAction TouchBoost;//klikanie dzia³a jak dotaykanie
+    private InputAction TouchBoost;//klikanie dziaï¿½a jak dotaykanie
     private InputAction TouchBounce;
 
 
@@ -76,7 +76,7 @@ public class Kojot : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (rig.linearVelocityX <= 50 && rig.linearVelocityY <= 50 && rig.linearVelocityX != 0 && rig.linearVelocityY != 0)
+        if (rig.linearVelocityX <= 30 && rig.linearVelocityY <= 30 && rig.linearVelocityX != 0 && rig.linearVelocityY != 0)
         {
              rig.linearVelocity += 0.05f * new Vector2(math.abs(transform.right.x), math.abs(transform.right.y)) * (new Vector2(rig.linearVelocityX,rig.linearVelocityY) /  new Vector2(math.abs(rig.linearVelocityX), math.abs(rig.linearVelocityY)));
         }
@@ -86,7 +86,7 @@ public class Kojot : MonoBehaviour
     {
         while (TouchBoost.IsPressed())
         {
-            if (rig.linearVelocityX <= 50 && rig.linearVelocityY <= 50)
+            if (rig.linearVelocityX <= 30 && rig.linearVelocityY <= 30)
             {
                 rig.linearVelocity *= 1.003f;
             }
