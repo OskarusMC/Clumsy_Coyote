@@ -16,7 +16,12 @@ public class rotetionOfPlatform : MonoBehaviour
     {
         if (Move == true)
         {
-            platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja.rotation, moveSpeed  * Time.deltaTime);
-        }
+            if (platforma.rotation != rotacja.rotation)
+            {
+                platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja.rotation, moveSpeed  * Time.deltaTime);
+            } else {
+                Move = false;
+            }
+        } 
     }
 }
