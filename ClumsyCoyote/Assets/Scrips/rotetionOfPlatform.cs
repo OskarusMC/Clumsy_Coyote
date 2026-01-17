@@ -5,16 +5,18 @@ public class rotetionOfPlatform : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Transform platforma;
     public Transform rotacja1;
-    public Transform rotacja2;
+    public Transform rotacja0;
     public float moveSpeed = 2f;
+    private float timer = 3f;
+    public int size = 0;
     // public Collider2D Triger2;
     private bool Move1 = false;
-    private bool Move2 = false;
+    // private bool Move2 = false;
     // Update is called once per frame
     void OnTriggerEnter2D(Collider2D collision)
     {
         Move1 = true;
-        Move2 = false;
+        // Move2 = false;
     }
     // void OnTriggerEnter2D(Collider2D collision)
     // {
@@ -30,16 +32,22 @@ public class rotetionOfPlatform : MonoBehaviour
                 platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja1.rotation, moveSpeed  * Time.deltaTime);
             } else {
                 Move1 = false;
+                if ((timer-=Time.deltaTime) < 0)
+                {
+                    timer = 3f; // reset timer to 3 seconds
+                    size++;
+                    platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja0.rotation, moveSpeed  * Time.deltaTime);
+                }
             }
         }
-        if (Move2 == true)
-        {
-            if (platforma.rotation != rotacja2.rotation)
-            {
-                platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja2.rotation, moveSpeed  * Time.deltaTime);
-            } else {
-                Move2 = false;
-            }
-        } 
+        // if (Move2 == true)
+        // {
+        //     if (platforma.rotation != rotacja2.rotation)
+        //     {
+        //         platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja2.rotation, moveSpeed  * Time.deltaTime);
+        //     } else {
+        //         Move2 = false;
+        //     }
+        // } 
     }
 }
