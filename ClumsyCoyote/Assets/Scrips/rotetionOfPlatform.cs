@@ -23,7 +23,7 @@ public class rotetionOfPlatform : MonoBehaviour
     //     Move2 = true;
     //     Move1 = false;
     // }
-    void Update()
+    void FixedUpdate()
     {
         if (Move1 == true)
         {
@@ -34,7 +34,7 @@ public class rotetionOfPlatform : MonoBehaviour
                 Move1 = false;
                 if ((timer-=Time.deltaTime) < 0)
                 {
-                    timer = 3f; // reset timer to 3 seconds
+                    timer = 3f;
                     size++;
                     platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja0.rotation, moveSpeed  * Time.deltaTime);
                 }
