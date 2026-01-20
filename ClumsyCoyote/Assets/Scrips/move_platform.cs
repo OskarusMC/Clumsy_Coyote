@@ -29,7 +29,6 @@ public class move_object: MonoBehaviour
                 if (transform.position == nextPosition)
                 { 
                     nextPosition = (nextPosition == PointA.position)? PointB.position : PointA.position;
-                    
                 }
             }
         }

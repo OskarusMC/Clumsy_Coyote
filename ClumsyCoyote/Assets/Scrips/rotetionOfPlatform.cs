@@ -6,9 +6,10 @@ public class rotetionOfPlatform : MonoBehaviour
     public Transform platforma;
     public Transform rotacja1;
     public Transform rotacja0;
-    public float moveSpeed = 2f;
-    private float timer = 3f;
-    public int size = 0;
+    public float MoveSpeed = 2f;
+    // private float timer = 3f;
+    // public int size = 0;
+    public bool ObtutWPrawo;
     // public Collider2D Triger2;
     private bool Move1 = false;
     // private bool Move2 = false;
@@ -28,16 +29,23 @@ public class rotetionOfPlatform : MonoBehaviour
         if (Move1 == true)
         {
             if (platforma.rotation != rotacja1.rotation)
-            {
-                platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja1.rotation, moveSpeed  * Time.deltaTime);
+            {   
+                if (ObtutWPrawo == true)
+                {
+                    platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja1.rotation, MoveSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja1.rotation, MoveSpeed * Time.deltaTime);
+                }
             } else {
                 Move1 = false;
-                if ((timer-=Time.deltaTime) < 0)
-                {
-                    timer = 3f;
-                    size++;
-                    platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja0.rotation, moveSpeed  * Time.deltaTime);
-                }
+                // if ((timer-=Time.deltaTime) < 0)
+                // {
+                //     timer = 3f;
+                //     size++;
+                //     platforma.rotation = Quaternion.RotateTowards (platforma.rotation, rotacja0.rotation, moveSpeed  * Time.deltaTime);
+                // }
             }
         }
         // if (Move2 == true)

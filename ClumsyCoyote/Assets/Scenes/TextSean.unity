@@ -587,8 +587,8 @@ MonoBehaviour:
   platforma: {fileID: 2076493553}
   rotacja1: {fileID: 930281019}
   rotacja0: {fileID: 1170654959}
-  moveSpeed: 20
-  size: 0
+  MoveSpeed: 20
+  ObtutWPrawo: 1
 --- !u!61 &512372866
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29806,8 +29806,8 @@ MonoBehaviour:
   platforma: {fileID: 2076493553}
   rotacja1: {fileID: 1991823855}
   rotacja0: {fileID: 1170654959}
-  moveSpeed: 20
-  size: 0
+  MoveSpeed: 20
+  ObtutWPrawo: 0
 --- !u!61 &731282066
 BoxCollider2D:
   m_ObjectHideFlags: 0
