@@ -589,6 +589,7 @@ MonoBehaviour:
   rotacja0: {fileID: 1170654959}
   MoveSpeed: 20
   ObtutWPrawo: 1
+  SecondRotation: {fileID: 731282065}
 --- !u!61 &512372866
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29808,6 +29809,7 @@ MonoBehaviour:
   rotacja0: {fileID: 1170654959}
   MoveSpeed: 20
   ObtutWPrawo: 0
+  SecondRotation: {fileID: 512372865}
 --- !u!61 &731282066
 BoxCollider2D:
   m_ObjectHideFlags: 0
