@@ -26,7 +26,7 @@ public class rotetionOfPlatform : MonoBehaviour
             SecondRotation.StopRotation();
         }
     }
-    void Update()
+    void FixedUpdate()
     {
         if (Move1 == true)
         {
