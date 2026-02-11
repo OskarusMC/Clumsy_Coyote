@@ -5,17 +5,19 @@ using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 
 
 public class Kojot : MonoBehaviour
 {
+    public static Kojot Instance;
+
     public LayerMask maska;
     bool InAir = true;
-    Vector3 oldPos;
 
-    [SerializeField] Rigidbody2D rig;
-    [SerializeField] List<PhysicsMaterial2D> material;
+    public Rigidbody2D rig;
+    public List<PhysicsMaterial2D> material;
     [SerializeField] PlayerInput input;
     private InputAction TouchBoost;//klikanie dzia�a jak dotaykanie
     private InputAction TouchBounce;
@@ -24,12 +26,19 @@ public class Kojot : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, -transform.up*3);
+        Gizmos.DrawRay(transform.position, -transform.up*2.1f);
         Gizmos.DrawRay(transform.position, transform.right * 10);
         Gizmos.DrawRay(transform.position, -transform.right * 10);
     }
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+
+        Instance = this;
         TouchBoost = input.actions["JumpBoost"];
         TouchBounce = input.actions["TouchBounce"];
     }
@@ -52,7 +61,7 @@ public class Kojot : MonoBehaviour
     }
     void Update()
     {
-        if (Physics2D.Raycast(transform.position, -transform.up, 3f, maska))
+        if (Physics2D.Raycast(transform.position, -transform.up, 2.1f, maska))
         {
             TouchBoost.Enable();
             if (InAir)
@@ -68,6 +77,32 @@ public class Kojot : MonoBehaviour
         }
 
 
+    }
+
+    public IEnumerator ToGround()
+    {
+        Debug.Log("0");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("1");
+        while (InAir)
+        {
+            Debug.Log("2");
+            yield return null;
+        }
+        Debug.Log("3");
+        yield return ToAir();
+    }
+    public IEnumerator ToAir()
+    {
+        Debug.Log("4");
+        while (!InAir)
+        {
+            Debug.Log("5");
+            yield return null;
+        }
+        Debug.Log("6");
+        Physics2D.gravity = new Vector2(0f, -9.81f);
+        transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -118,9 +153,7 @@ public class Kojot : MonoBehaviour
     {
         if (Physics2D.Raycast(transform.position, transform.right, 10f, maska) || Physics2D.Raycast(transform.position, -transform.right, 10f, maska))
         {
-            Debug.Log(rig.sharedMaterial);
             rig.sharedMaterial = material[2];
-            Debug.Log(rig.sharedMaterial);
         }
     }
 }
