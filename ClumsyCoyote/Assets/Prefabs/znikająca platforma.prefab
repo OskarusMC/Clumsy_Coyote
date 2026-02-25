@@ -225,5 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd033e1e3c82b442b70194c95e0acf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  NormalSprite: {fileID: -1900023226321169862, guid: ee3bd05fc791a1146a32648a73e06cbd, type: 3}
+  DisabledSprite: {fileID: -1884319052, guid: 6c71ff22f1b517d40ab29bcf84709933, type: 3}
   Timer: 1
   WaitTime: 20
