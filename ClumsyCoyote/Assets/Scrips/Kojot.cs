@@ -130,6 +130,7 @@ public class Kojot : MonoBehaviour
     }
     void Jump(InputAction.CallbackContext context)
     {
+        //?!?!
         switch (transform.eulerAngles.z)
         {
             case 0:
@@ -140,7 +141,8 @@ public class Kojot : MonoBehaviour
                 break;            
             case 180:
                 rig.linearVelocityY = -2 / 5f * math.abs(rig.linearVelocityX) - 20;
-                break;                
+                break;
+            case -90:
             case 270:
                 rig.linearVelocityX = 2 / 5f * math.abs(rig.linearVelocityY) + 20;
                 break;

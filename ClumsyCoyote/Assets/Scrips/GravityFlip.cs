@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GravityFlip : MonoBehaviour
@@ -20,8 +21,8 @@ public class GravityFlip : MonoBehaviour
             Debug.Log(transform);
             Transform gracz = collision.transform;
             Kojot kojot = collision.GetComponent<Kojot>();
-            float GravityDarection = transform.eulerAngles.z + RampOfset;
-            switch (Mathf.Round(GravityDarection % 360))
+            float GravityDarection = Mathf.Round(transform.eulerAngles.z + RampOfset);
+            switch (GravityDarection % 360)
             {
             case 0:
                 Physics2D.gravity = new Vector2(0,-9.81f);
@@ -38,7 +39,6 @@ public class GravityFlip : MonoBehaviour
                 break;
             }
             gracz.eulerAngles = new Vector3(0,0,GravityDarection);
-            Debug.Log(gracz.eulerAngles.z);
             kojot.StartCoroutine(kojot.ToGround());
         }
     }
