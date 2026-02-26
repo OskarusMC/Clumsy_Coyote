@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 3091966482201304714}
   - component: {fileID: 7758746630420259003}
   - component: {fileID: 290661777000287453}
-  - component: {fileID: 1195326166947691713}
   - component: {fileID: 5353610388975878607}
+  - component: {fileID: 1195326166947691713}
   m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
@@ -169,7 +169,7 @@ MonoBehaviour:
   PointA: {fileID: 4539101347181822154}
   PointB: {fileID: 7858176607681304518}
   MoveSpeed: 2
---- !u!61 &1195326166947691713
+--- !u!61 &5353610388975878607
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,9 +213,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4, y: 4}
   m_EdgeRadius: 0
---- !u!61 &5353610388975878607
+--- !u!61 &1195326166947691713
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -259,7 +259,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4, y: 4}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &5037444790993425052
 GameObject:
