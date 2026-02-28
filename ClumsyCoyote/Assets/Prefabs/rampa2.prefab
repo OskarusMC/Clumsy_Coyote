@@ -308,7 +308,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GravityFlip
   RampOfset: 0
-  OpositRampa: {fileID: 0}
+  trigger2: 1
+  OpositRampa: {fileID: 7920242414715228156}
 --- !u!1 &7856975701635171211
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,4 +492,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GravityFlip
   RampOfset: 0
-  OpositRampa: {fileID: 0}
+  trigger2: 1
+  OpositRampa: {fileID: 4484218181210458986}

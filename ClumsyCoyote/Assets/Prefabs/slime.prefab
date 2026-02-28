@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7467651916721328680}
   - component: {fileID: 3439392038839772422}
   - component: {fileID: 6512646695558232348}
-  - component: {fileID: 8283800720162247248}
   - component: {fileID: 6133677983766488517}
+  - component: {fileID: 4159964528020552718}
   m_Layer: 0
   m_Name: slime
   m_TagString: Untagged
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GravityFlip
   RampOfset: 0
+  trigger2: 0
   OpositRampa: {fileID: 0}
 --- !u!212 &6512646695558232348
 SpriteRenderer:
@@ -107,8 +108,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &8283800720162247248
-BoxCollider2D:
+--- !u!114 &6133677983766488517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5739647765032435608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2181aa5a969cc459171fe028ef3768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  Sprite1: {fileID: 368543389579951487, guid: c0ea5e5443d07fb48bfaf81a73c2a752, type: 3}
+  Sprite2: {fileID: -458641133534639524, guid: c0ea5e5443d07fb48bfaf81a73c2a752, type: 3}
+--- !u!68 &4159964528020552718
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,7 +132,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ee0e586ebcb0f554391a8ed1f8f892cb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -141,29 +156,13 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 1.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 2}
-    newSize: {x: 4, y: 4}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 4, y: 1}
+  m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
---- !u!114 &6133677983766488517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5739647765032435608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc2181aa5a969cc459171fe028ef3768, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  Sprite1: {fileID: 368543389579951487, guid: c0ea5e5443d07fb48bfaf81a73c2a752, type: 3}
-  Sprite2: {fileID: -458641133534639524, guid: c0ea5e5443d07fb48bfaf81a73c2a752, type: 3}
+  m_Points:
+  - {x: -1.874741, y: 1.0059813}
+  - {x: -0.67001677, y: 1.0133003}
+  - {x: 1.8521085, y: 1.0130005}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0

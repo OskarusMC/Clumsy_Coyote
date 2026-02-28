@@ -4,25 +4,37 @@ using UnityEngine;
 
 public class GravityFlip : MonoBehaviour
 {
-    
+
     [SerializeField] int RampOfset;
+    [SerializeField] bool trigger2;
 
     [SerializeField] GameObject OpositRampa;
+    GravityFlip OpositRampaScript;
+    Kojot kojot;
+
+    void Start()
+    {
+        kojot = Kojot.Instance.GetComponent<Kojot>();
+        if (trigger2)
+        {
+            OpositRampaScript = OpositRampa.GetComponent<GravityFlip>();
+        }
+
+    }
     void OnTriggerEnter2D(Collider2D collision)
     {
-
-
-        if (collision.gameObject.layer == 3)
+        kojot.CorMange(false);
+        if (collision.gameObject.layer == 3 && !trigger2)
         {
             if (OpositRampa != null)
             {
                 DisableRampa();
             }
-            Debug.Log(transform);
+            
             Transform gracz = collision.transform;
-            Kojot kojot = collision.GetComponent<Kojot>();
-            float GravityDarection = Mathf.Round(transform.eulerAngles.z + RampOfset);
-            switch (GravityDarection % 360)
+
+            float GravityDarection = transform.eulerAngles.z + RampOfset;
+            switch (Mathf.Round(GravityDarection % 360))
             {
             case 0:
                 Physics2D.gravity = new Vector2(0,-9.81f);
@@ -38,8 +50,12 @@ public class GravityFlip : MonoBehaviour
                 Physics2D.gravity = new Vector2(-9.81f, 0);
                 break;
             }
-            gracz.eulerAngles = new Vector3(0,0,GravityDarection);
-            kojot.StartCoroutine(kojot.ToGround());
+            gracz.eulerAngles = new Vector3(0,0,Mathf.Round(GravityDarection));
+            kojot.CorMange(true);
+        }
+        else if (trigger2)
+        {
+            ActivateRampa();
         }
     }
 
@@ -48,5 +64,11 @@ public class GravityFlip : MonoBehaviour
         OpositRampa.SetActive(false);
         await Awaitable.WaitForSecondsAsync(2);
         OpositRampa.SetActive(true);
+    }
+    async void ActivateRampa()
+    {
+        OpositRampaScript.trigger2 = false;
+        await Awaitable.WaitForSecondsAsync(2);
+        OpositRampaScript.trigger2 = true;
     }
 }

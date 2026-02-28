@@ -15,6 +15,7 @@ public class Kojot : MonoBehaviour
 
     public LayerMask maska;
     bool InAir = true;
+    bool stopCor;
 
     public Rigidbody2D rig;
     public List<PhysicsMaterial2D> material;
@@ -22,6 +23,7 @@ public class Kojot : MonoBehaviour
     private InputAction TouchBoost;//klikanie dzia�a jak dotaykanie
     private InputAction TouchBounce;
 
+    IEnumerator co;
 
     void OnDrawGizmos()
     {
@@ -79,6 +81,20 @@ public class Kojot : MonoBehaviour
 
     }
 
+    public void CorMange(bool start)
+    {
+        co = ToGround();
+
+        if (start) {
+            StartCoroutine(co);
+        }
+        else
+        {
+            stopCor = true;
+        }
+    }
+
+
     public IEnumerator ToGround()
     {
         Debug.Log("0");
@@ -90,15 +106,15 @@ public class Kojot : MonoBehaviour
             yield return null;
         }
         Debug.Log("3");
-        yield return ToAir();
-    }
-    public IEnumerator ToAir()
-    {
-        Debug.Log("4");
         while (!InAir)
         {
             Debug.Log("5");
             yield return null;
+        }
+        if (stopCor)
+        {
+            stopCor = false;
+            yield break;
         }
         Debug.Log("6");
         Physics2D.gravity = new Vector2(0f, -9.81f);
